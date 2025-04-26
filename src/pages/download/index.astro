@@ -4,8 +4,6 @@ import { pb_client } from "@/configs/pocketbase";
 import Layout from "@/layouts/Layout.astro";
 import Header from "./_components/Header.astro";
 
-export const prerender = false;
-
 const id = Astro.url.searchParams.get("id");
 
 if (!id) {
