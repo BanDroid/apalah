@@ -1,0 +1,20 @@
+---
+import { pb_client } from "@/configs/pocketbase";
+
+export const partial = true;
+
+const { game } = Astro.props;
+---
+
+<header
+  class="hero aspect-video mb-8 rounded-xl overflow-hidden place-items-start items-end"
+  style=`background-image: url(${pb_client.files.getURL(game, game.screenshots[0])}); background-position: center; background-size: cover;`
+>
+  <div class="w-full h-full bg-linear-to-t from-black/80 from-20% via-none via-40% to-none to-50%"></div>
+  <div class="hero-content text-neutral-content">
+    <div class="w-full h-full flex flex-row items-center gap-4">
+      <img src={pb_client.files.getURL(game, game.icon)} alt="icon" class="size-12 object-center object-cover rounded-full overflow-hidden">
+      <h1 class="text-xl font-semibold uppercase">{game.name}</h1>
+    </div>
+  </div>
+</header>

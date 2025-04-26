@@ -1,0 +1,26 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Header from './_components/Header.astro';
+import ItemsCard from '@/components/ui/ItemCard.astro';
+
+import { pb_client } from "@/configs/pocketbase"
+
+const games = await pb_client.collection("games").getList(1, 12, {
+	filter: `publish = true`,
+	expand: `categories`,
+	sort: `-updated`
+})
+---
+
+<Layout>
+	<Header />
+
+	<section class="flex flex-col gap-4">
+		<h1 class="text-4xl font-semibold"><span class="text-primary">Game Populer</span> Terkini</h1>
+		<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+			{games.items.map(game => (
+				<ItemsCard game={game} />
+			))}
+		</ul>
+	</section>
+</Layout>

@@ -1,0 +1,66 @@
+---
+import type { RecordModel } from "pocketbase";
+import { pb_client } from "@/configs/pocketbase";
+import Layout from "@/layouts/Layout.astro";
+import Header from "./_components/Header.astro";
+
+export const prerender = false;
+
+const id = Astro.url.searchParams.get("id");
+
+if (!id) {
+  return Astro.rewrite("/404")
+}
+
+interface GameRecord extends RecordModel {
+  expand?: {
+    categories: { name: string }[]
+    developer: {
+      id: string
+      name: string
+    }
+  }
+}
+const game = await pb_client.collection("games").getOne<GameRecord>(id, {
+  expand: `categories,developer`
+});
+---
+
+<Layout title={game.name} description={game.short_description}>
+  <Header game={game} />
+
+  <section class="bg-base-100 border-l-4 border-primary rounded-r-xl space-y-2">
+    <ul class="list">
+      {game.description && (
+        <li class="list-row">
+          <div>
+            <div class="font-medium">Deskripsi</div>
+          </div>
+          <div set:html={game.description} class="list-col-wrap"></div>
+        </li>
+      )}
+
+      <li class="list-row">
+        <div>
+          <div class="font-medium">Kategori</div>
+        </div>
+        <div class="list-col-wrap">
+          <ul class="flex flex-row flex-wrap gap-2">
+            {game.expand?.categories.map((category) => (
+              <li class="badge badge-soft badge-primary badge-sm">{category.name}</li>
+            ))}
+          </ul>
+        </div>
+      </li>
+
+      <li class="list-row">
+        <div>
+          <div class="font-medium">Developer</div>
+        </div>
+        <div class="list-col-wrap">
+          <a href=`/developer/${game.expand?.developer.id}` class="link link-primary">{game.expand?.developer.name}</a>
+        </div>
+      </li>
+    </ul>
+  </section>
+</Layout>
