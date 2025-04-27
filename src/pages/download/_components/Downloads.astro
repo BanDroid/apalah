@@ -1,0 +1,33 @@
+---
+const { game } = Astro.props;
+---
+
+<div class="flex flex-col flex-wrap items-stretch md:flex-row md:items-start gap-4">
+  {game.android_download_link && (
+    <a href={game.android_download_link} class="btn btn-primary md-ripples" target="_blank">
+      <img src="https://cdn.simpleicons.org/android/4cff52" alt="android" class="size-4" />
+      <span>Android</span>
+    </a>
+  )}
+
+  {game.windows_download_link && (
+    <a href={game.windows_download_link} class="btn btn-primary md-ripples" target="_blank">
+      <img src="/external-icons/microsoft.png" alt="windows" class="size-4" />
+      <span>Windows</span>
+    </a>
+  )}
+
+  {game.linux_download_link && (
+    <a href={game.linux_download_link} class="btn btn-primary md-ripples" target="_blank">
+      <img src="https://cdn.simpleicons.org/linux" alt="linux" class="size-4" />
+      <span>Android</span>
+    </a>
+  )}
+
+  {game.macos_download_link && (
+    <a href={game.macos_download_link} class="btn btn-primary md-ripples" target="_blank">
+      <img src="https://cdn.simpleicons.org/macos" alt="macos" class="size-4" />
+      <span>macOS</span>
+    </a>
+  )}
+</div>

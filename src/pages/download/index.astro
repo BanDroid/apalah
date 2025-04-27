@@ -3,6 +3,7 @@ import type { RecordModel } from "pocketbase";
 import { pb_client } from "@/configs/pocketbase";
 import Layout from "@/layouts/Layout.astro";
 import Header from "./_components/Header.astro";
+import Downloads from "./_components/Downloads.astro";
 
 const id = Astro.url.searchParams.get("id");
 
@@ -57,6 +58,15 @@ if (!game) return Astro.rewrite("/404")
         </div>
         <div class="list-col-wrap">
           <a href=`/developer/${game.expand?.developer.id}` class="link link-primary">{game.expand?.developer.name}</a>
+        </div>
+      </li>
+
+      <li class="list-row">
+        <div>
+          <div class="font-medium">Unduh</div>
+        </div>
+        <div class="list-col-wrap col-span-2">
+          <Downloads game={game} />
         </div>
       </li>
     </ul>
