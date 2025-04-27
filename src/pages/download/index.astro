@@ -6,9 +6,7 @@ import Header from "./_components/Header.astro";
 
 const id = Astro.url.searchParams.get("id");
 
-if (!id) {
-  return Astro.rewrite("/404")
-}
+if (!id) return Astro.rewrite("/404")
 
 interface GameRecord extends RecordModel {
   expand?: {
@@ -22,6 +20,8 @@ interface GameRecord extends RecordModel {
 const game = await pb_client.collection("games").getOne<GameRecord>(id, {
   expand: `categories,developer`
 });
+
+if (!game) return Astro.rewrite("/404")
 ---
 
 <Layout title={game.name} description={game.short_description}>
