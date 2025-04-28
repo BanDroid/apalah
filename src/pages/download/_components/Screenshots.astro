@@ -1,0 +1,16 @@
+---
+import { pb_client } from "@/configs/pocketbase";
+import type { RecordModel } from "pocketbase";
+
+const { game, screenshots } = Astro.props as { game: RecordModel, screenshots: string[] };
+---
+
+<div class="carousel carousel-center bg-base-200 w-full p-2 gap-2 rounded-lg overflow-x-scroll" style="scrollbar-width: inherit;">
+  {screenshots.map(screenshot => (
+    <div class="carousel-item">
+      <a class="w-full h-full" data-fslightbox data-type="image" href={pb_client.files.getURL(game, screenshot)}>
+        <img src={pb_client.files.getURL(game, screenshot)} alt={screenshot} loading="lazy" class="max-w-64 h-full object-center object-cover rounded-xl" />
+      </a>
+    </div>
+  ))}
+</div>

@@ -4,6 +4,7 @@ import { pb_client } from "@/configs/pocketbase";
 import Layout from "@/layouts/Layout.astro";
 import Header from "./_components/Header.astro";
 import Downloads from "./_components/Downloads.astro";
+import Screenshots from "./_components/Screenshots.astro";
 
 const id = Astro.url.searchParams.get("id");
 
@@ -73,6 +74,17 @@ try {
           <Downloads game={game} />
         </div>
       </li>
+
+      <li class="list-row">
+        <div>
+          <div class="font-medium">Screenshot</div>
+        </div>
+        <div class="list-col-wrap col-span-2 overflow-x-hidden">
+          <Screenshots game={game} screenshots={game.screenshots} />
+        </div>
+      </li>
     </ul>
   </section>
 </Layout>
+
+<script src="https://cdn.jsdelivr.net/npm/fslightbox@3.5.1/index.min.js"></script>
